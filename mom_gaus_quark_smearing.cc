@@ -90,6 +90,7 @@ namespace Chroma
       XMLReader paramtop(xml, path);
 
       read(paramtop, "wvf_param", wvf_param);
+      read(paramtop,"MOM",mom);
       read(paramtop, "wvfIntPar", wvfIntPar);
       read(paramtop, "no_smear_dir", no_smear_dir);
     }
@@ -102,6 +103,7 @@ namespace Chroma
     
       write(xml, "wvf_kind", MomGausQuarkSmearingEnv::getName());
       write(xml, "wvf_param", wvf_param);
+      write(xml,"MOM",mom);
       write(xml, "wvfIntPar", wvfIntPar);
       write(xml, "no_smear_dir", no_smear_dir);
 
@@ -118,7 +120,7 @@ namespace Chroma
 	    multi1d<LatticeColorMatrix> u_smr(Nd);
 	    for(int mu=0; mu<Nd; mu++)
 	    {
-	        Real K= 0.5*twopi/Layout::lattSize()[mu];
+	        Real K= params.mom[mu]*twopi/Layout::lattSize()[mu];
 	        QDPIO::cout<< mu << ":"<< cos(K)<<"+"<<-sin(K)<<"I"<<std::endl;
 	        if(mu<Nd-1){
 	        u_smr[mu]=u[mu]*cmplx(cos(K),-sin(K));
